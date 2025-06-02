@@ -1,3 +1,7 @@
+[![Deploy to GitHub Pages](https://github.com/username/emoji-challenge/actions/workflows/deploy.yml/badge.svg)](https://github.com/username/emoji-challenge/actions/workflows/deploy.yml)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen)](https://username.github.io/emoji-challenge)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 # Emoji Decode Challenge
 
 A cutting-edge, zero-backend web application that transforms text, images, and audio into emoji puzzles using Chrome's built-in AI. Create challenges from any content and share them for others to decode!
@@ -238,6 +242,54 @@ cd emoji-challenge
 # Or serve with any static server:
 python -m http.server 8000
 # Navigate to http://localhost:8000
+```
+
+## 🚀 Deployment
+
+### **GitHub Pages with CI/CD**
+
+This project includes automated deployment to GitHub Pages using GitHub Actions.
+
+#### **Setup Instructions:**
+
+1. **Repository Settings**
+   - Go to your GitHub repository settings
+   - Navigate to "Pages" section
+   - Set source to "GitHub Actions"
+
+2. **Automatic Deployment**
+   - Push to `main` or `master` branch triggers deployment
+   - GitHub Actions builds and deploys automatically
+   - Live site available at: `https://username.github.io/repository-name`
+
+3. **Manual Deployment** (if needed)
+   ```bash
+   # Deploy to gh-pages branch
+   git checkout -b gh-pages
+   git push origin gh-pages
+   ```
+
+#### **CI/CD Pipeline Features:**
+- ✅ Automated testing (if tests exist)
+- ✅ Linting with ESLint
+- ✅ Zero-downtime deployment
+- ✅ Build status checks
+- ✅ Rollback capabilities
+
+#### **Environment URLs:**
+- **Production**: `https://username.github.io/emoji-challenge`
+- **Preview**: Generated for pull requests
+- **Local Development**: `http://localhost:8000`
+
+#### **Custom Domain** (optional)
+1. Add CNAME file with your domain
+2. Configure DNS settings
+3. Enable HTTPS in repository settings
+
+```bash
+# Add custom domain
+echo "your-domain.com" > CNAME
+git add CNAME && git commit -m "Add custom domain"
 ```
 
 ## 🎯 Usage Examples

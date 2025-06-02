@@ -7,7 +7,8 @@
     "dev": "npx serve .",
     "test": "jest",
     "lint": "eslint *.js",
-    "build": "echo 'No build step needed for static app'"
+    "build": "echo 'No build step needed for static app'",
+    "health": "node scripts/health-check.js"
   },
   "keywords": ["emoji", "ai", "challenge", "chrome", "prompt-api"],
   "author": "Jd Fiscus",
