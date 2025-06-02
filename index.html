@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self';">
+    <title>Emoji Decode Challenge</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <button class="help-btn" onclick="helpDialog.showModal()">?</button>
+        
+        <!-- Media Control Buttons -->
+        <div class="media-controls-top">
+            <button id="cameraBtn" class="media-btn camera-btn" title="Take Photo">📷</button>
+            <button id="recordBtnTop" class="media-btn record-btn-top" title="Record Audio">🎤</button>
+        </div>
+        
+        <header class="app-header">
+            <h1>Emoji Decode Challenge</h1>
+            <p>Turn anything into emoji puzzles!</p>
+        </header>
+
+        <!-- Create Mode -->
+        <div id="createMode" class="create-mode">
+            <div class="input-area">
+                <textarea 
+                    id="mainTextarea" 
+                    placeholder="Type your story, drag an image here, or record audio below..."
+                    maxlength="100"
+                    autofocus
+                ></textarea>
+            </div>
+
+            <div id="mediaMode" class="media-mode hidden">
+                <div id="mediaPreview"></div>
+                <div class="media-controls">
+                    <button id="clearMediaBtn" class="small-btn secondary-btn">Clear</button>
+                    <button id="regenerateBtn" class="small-btn secondary-btn">Regenerate</button>
+                </div>
+            </div>
+
+            <!-- <div class="media-controls">
+                <button id="recordBtn" class="small-btn record-btn">🎤 Record</button>
+                <button id="stopRecordBtn" class="small-btn record-btn hidden">⏹️ Stop</button>
+            </div> -->
+
+            <button id="generateBtn" class="generate-btn" disabled>
+                Generate Emoji Challenge
+            </button>
+            
+            <div class="shortcut-hint">
+                Press <kbd>⌘ + Enter</kbd> (or <kbd>Ctrl + Enter</kbd>) to generate
+            </div>
+        </div>
+
+        <!-- Generation Mode -->
+        <div id="generationMode" class="generation-mode hidden">
+            <div class="spinner">🔄</div>
+            <h2>Creating your emoji story...</h2>
+        </div>
+
+        <!-- Results Mode -->
+        <div id="resultsMode" class="hidden">
+            <div id="emojiPreview" class="emoji-preview"></div>
+            
+            <div id="shareArea" class="share-area">
+                <h3>🔗 Share this challenge:</h3>
+                <input type="text" id="shareLink" class="share-link" readonly>
+                <button id="copyBtn" class="copy-btn">Copy Challenge Link</button>
+            </div>
+
+            <div class="social-share">
+                <h3>Share on social media:</h3>
+                <div class="social-buttons">
+                    <button class="social-btn twitter-btn">Twitter</button>
+                    <button class="social-btn facebook-btn">Facebook</button>
+                    <button class="social-btn linkedin-btn">LinkedIn</button>
+                    <button class="social-btn whatsapp-btn">WhatsApp</button>
+                </div>
+            </div>
+
+            <button id="newChallengeBtn" class="generate-btn">
+                Create Another Challenge
+            </button>
+        </div>
+
+        <!-- Decode Mode -->
+        <div id="decodeMode" class="decode-mode hidden">
+            <h2>Decode the Emoji Story</h2>
+            
+            <div id="scoreDisplay" class="score-display">
+                <div class="score-item">
+                    <span>🏆</span>
+                    <span id="currentScore">100</span>
+                    <span>points</span>
+                </div>
+                <div class="score-item">
+                    <span>🎯</span>
+                    <span id="attemptsCount">0</span>
+                    <span>attempts</span>
+                </div>
+            </div>
+            
+            <div id="emojiDisplay" class="emoji-display"></div>
+            
+            <input 
+                type="text" 
+                id="guessInput" 
+                class="guess-input"
+                placeholder="What do these emojis represent?"
+            >
+            
+            <button id="submitGuessBtn" class="generate-btn" disabled>
+                Submit Guess
+            </button>
+            
+            <div id="resultMsg" class="result-msg hidden"></div>
+            <div id="clueArea" class="clue-area hidden"></div>
+            
+            <div id="revealSection" class="reveal-section hidden">
+                <div id="revealCounter" class="reveal-counter">Reveal available in <span id="countdownText">3</span> attempts</div>
+                <button id="revealBtn" class="reveal-btn" disabled>Reveal Answer</button>
+            </div>
+            
+            <div id="answerArea" class="answer-area hidden"></div>
+            
+            <button id="playAgainBtn" class="generate-btn hidden">
+                Create Your Own Challenge
+            </button>
+        </div>
+    </div>
+
+    <!-- Help Dialog -->
+    <dialog id="helpDialog">
+        <div class="dialog-content">
+            <div class="dialog-header">
+                <h2>How to Play</h2>
+                <button class="dialog-close" onclick="helpDialog.close()">×</button>
+            </div>
+            <div>
+                <h3>Creating Challenges:</h3>
+                <ul style="margin: 16px 0; padding-left: 20px;">
+                    <li>Type a short story or sentence</li>
+                    <li>Or drag & drop an image</li>
+                    <li>Or record a voice note</li>
+                    <li>AI will convert it to emojis</li>
+                    <li>Share the link with friends!</li>
+                </ul>
+                
+                <h3>Solving Challenges:</h3>
+                <ul style="margin: 16px 0; padding-left: 20px;">
+                    <li>Look at the emoji sequence</li>
+                    <li>Guess what story they represent</li>
+                    <li>Type your answer and submit</li>
+                    <li>See if you got it right!</li>
+                </ul>
+                
+                <h3>Chrome AI Requirements:</h3>
+                <ul style="margin: 16px 0; padding-left: 20px;">
+                    <li>Use Chrome Canary 130+ or Chrome Dev</li>
+                    <li>Enable "Prompt API for Gemini Nano" in chrome://flags</li>
+                    <li>Enable "Optimization Guide On Device Model" in chrome://flags</li>
+                    <li>Restart Chrome after enabling flags</li>
+                    <li>Visit chrome://components and update "Optimization Guide On Device Model"</li>
+                </ul>
+                
+                <p style="margin: 16px 0; font-size: 0.9rem; color: #666;">
+                    <strong>Note:</strong> This app uses Chrome's built-in AI for privacy and offline functionality. 
+                    Your data never leaves your device.
+                </p>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Debug Terminal -->
+    <button class="debug-toggle" onclick="toggleDebug()">{ }</button>
+    <div id="debugTerminal" class="debug-terminal hidden">
+        <div class="debug-header">
+            <div class="debug-title">Debug Console</div>
+            <button class="debug-clear" onclick="clearDebugLog()">Clear</button>
+        </div>
+        <div id="debugContent" class="debug-content"></div>
+    </div>
+    <script src="multimodal.js"></script>
+</body>
+</html>
